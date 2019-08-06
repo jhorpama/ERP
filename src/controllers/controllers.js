@@ -20,8 +20,18 @@ bodega.setArticulos = async (req, res) => {
    articulo.total_bodega = req.body.total_bodega
    articulo.codigo_articulo = req.body.codigo_articulo
 
-   await articulo.save();
+   // Validar que no haya inventario negativo
+   const validar_articulo = await Articulo.findOne({codigo_articulo: req.body.codigo_articulo});
 
+   console.log(validar_articulo);
+   if(validar_articulo === null){
+      await articulo.save();
+   }else{
+      res.json({
+         message: "Este produto ya se encuentra registrado en la base de datos"
+      })
+   }
+   
    res.json(articulo);
 };
 
