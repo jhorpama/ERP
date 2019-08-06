@@ -19,11 +19,11 @@ bodega.setArticulos = async (req, res) => {
    articulo.descripcion = req.body.descripcion
    articulo.total_bodega = req.body.total_bodega
    articulo.codigo_articulo = req.body.codigo_articulo
+   articulo.id_bodega = req.body.id_bodega
 
-   // Validar que no haya inventario negativo
+   // Valida que no haya inventario negativo
    const validar_articulo = await Articulo.findOne({codigo_articulo: req.body.codigo_articulo});
 
-   console.log(validar_articulo);
    if(validar_articulo === null){
       await articulo.save();
    }else{
@@ -31,12 +31,11 @@ bodega.setArticulos = async (req, res) => {
          message: "Este produto ya se encuentra registrado en la base de datos"
       })
    }
-   
+
    res.json(articulo);
 };
 
 bodega.deleteArticulo = async (req, res) => {
-    console.log(req.params.id);
     const articulo_eliminado = await Articulo.findByIdAndRemove(req.params.id);
     res.json(articulo_eliminado);
 };
@@ -48,5 +47,21 @@ bodega.actualizarArticulo = async (req, res) => {
       )
   });
 };
+
+bodega.getBodega = async (req, res) => {
+   const bodega = await Bodega.find();
+   res.json(bodega);
+};
+
+bodega.setBodega = async (req, res) => {
+   const bodega = new Bodega();
+   bodega.nombre_bodega = req.body.nombre_bodega
+
+   await bodega.save();
+
+   res.json(
+      bodega
+   )
+}
 
 module.exports = bodega;
