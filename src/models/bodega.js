@@ -6,3 +6,5 @@ const bodega = new Schema({
         required: true
     }
 });
+
+module.exports = model('bodega', bodega);
