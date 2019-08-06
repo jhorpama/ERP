@@ -68,4 +68,26 @@ bodega.setBodega = async (req, res) => {
    )
 }
 
+bodega.moverArticulo = async (req, res) => {
+
+   const articuloDesde = await Articulo.findOne({_id: req.params.idArticuloDesde});
+   const articuloA = await Articulo.findOne({_id: req.params.idArticuloA});
+
+   const reducir = articuloDesde.total_bodega - req.body.cantidad;
+   const aumentar = articuloA.total_bodega + req.body.cantidad;
+
+   actualizarArticulo(req.params.idArticuloDesde, reducir);
+   actualizarArticulo(req.params.idArticuloA, aumentar);
+
+   res.json({
+      message: "Articulo movido con éxito!"
+   })
+}
+
+const actualizarArticulo = async (id, cantidad) => {
+   console.log(id, cantidad);
+   await Articulo.findOneAndUpdate({_id: id},{total_bodega: cantidad}, {new: false}, (err, data) => {
+   });
+}
+
 module.exports = bodega;
