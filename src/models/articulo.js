@@ -15,6 +15,10 @@ const articulo = new Schema({
      type: Number,
      required: true
    },
+   total_bodega: {
+     type: Number,
+     required: true
+   },
    creado_en:{
      type: Date, default: Date.now
    }
