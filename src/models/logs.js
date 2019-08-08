@@ -28,6 +28,9 @@ const log = ({
    numero_unidades_transferidas: {
        type: Number,
        required: true
+   },
+   creado_en: {
+     type: Date, default: Date.now
    }
 });
 
