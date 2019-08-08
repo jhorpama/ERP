@@ -82,7 +82,7 @@ bodega.moverArticulo = async (req, res) => {
 
    // se envia el id y la cantidad para actualiza el total de bodega
    actualizarArticulo(req.params.idArticuloDesde, reducir);
-   actualizarArticulo(req.params.idArticuloA, aumentar);
+   actualizarArticulo(articuloA._id, aumentar);
    //final del actualizado
 
    // se busca la bodega por id
@@ -114,5 +114,10 @@ const actualizarArticulo = async (id, cantidad) => {
    });
 }
 //final del actualizado
+
+bodega.verLogs = async (req, res) => {
+   const logs = await Log.find();
+   res.json(logs);
+}
 
 module.exports = bodega;
